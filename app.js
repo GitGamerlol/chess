@@ -38,7 +38,7 @@ if(rev&&lm&&lm.t==i&&CL[rev-1])d.insertAdjacentHTML('beforeend',badge(CL[rev-1])
 if(set.coord){if(k%8==0)d.append($('i','r',8-r));if(k>55)d.append($('i','f',F[c]))}bd.append(d)}}
 function click(i){const ms=L.filter(m=>m.f==sel&&m.t==i);if(!ms.length)return;
 if(ms[0].p){const r=$('div','seg pr'),mo=modal('Promote to',[['',r]]);ms.forEach(m=>{const b=$('button','',`<img src="${U()}${S.t+m.p}.svg">`);b.onclick=()=>{mo.remove();play(m)};r.append(b)})}else play(ms[0])}
-bd.onpointerdown=e=>{if(dead||rev)return;const q=e.target.closest('.sq');if(!q||over||busy||(g.vs=='bot'&&S.t!=pl))return;const i=+q.dataset.i,p=S.b[i];
+const bdDown=e=>{if(dead||rev)return;const q=e.target.closest('.sq');if(!q||over||busy||(g.vs=='bot'&&S.t!=pl))return;const i=+q.dataset.i,p=S.b[i];
 if(sel>=0&&L.some(m=>m.f==sel&&m.t==i)){click(i);return}
 if(p&&p[0]==S.t){const was=i==sel;if(!was){sel=i;sfx.sel();draw()}const im=bd.children[flip?63-i:i].querySelector('img'),gh=im.cloneNode(),w=q.offsetWidth;
 gh.style.cssText=`position:fixed;width:${w}px;height:${w}px;pointer-events:none;z-index:20;left:${e.clientX-w/2}px;top:${e.clientY-w/2}px`;document.body.append(gh);im.style.opacity=.35;dr={i,gh,w,was,x:e.clientX,y:e.clientY,mv:0}}else{sel=-1;draw()}};
@@ -70,6 +70,7 @@ sl.value=rv;mv.innerHTML=SAN.map((s,i)=>(i%2?'':`<b>${i/2+1}.</b>`)+`<span data-
 function exit(){rev=0;document.body.classList.remove('rv');refresh()}
 addEventListener('keydown',e=>{if(rev&&CL.length){if(e.key=='ArrowLeft')go(rv-1);if(e.key=='ArrowRight')go(rv+1)}});
 app.innerHTML='<div id=eb><div id=ef></div></div><div id=bw><div id=tb class=bar></div><div id=bd></div><div id=bb class=bar></div></div><div id=sp><div id=ti></div><div id=mv></div><div id=rp><div id=inf></div><input id=sl type=range min=0 value=0><div class=bt id=nv></div></div><div class=bt id=gb></div></div>';
+bd.onpointerdown=bdDown;
 const mk=(box,i,t,f)=>{const b=$('button','btn',ic(i));b.title=t;b.onclick=f;box.append(b);return b};
 mk(gb,'flip','Flip',()=>{flip=!flip;draw();bars()});mk(gb,'undo','Undo',undo);mk(gb,'flag','Resign',resign);mk(gb,'chart','Review',review);
 mk(gb,'snd','Sound',function(){set.snd=set.snd?0:1;save();this.style.opacity=set.snd?1:.4}).style.opacity=set.snd?1:.4;mk(gb,'set','Settings',settings);
